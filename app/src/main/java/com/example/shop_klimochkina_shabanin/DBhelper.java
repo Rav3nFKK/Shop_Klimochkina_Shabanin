@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 public class DBhelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 4    ;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "storeDB";
     public static final String TABLE_PRODUCT = "contacts";//
 
