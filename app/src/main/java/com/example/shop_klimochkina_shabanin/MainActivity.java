@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.btnNewAct:
-                Intent intent = new Intent(this, Activity2.class);
+                Intent intent = new Intent(this, LoginActvActivity.class);
                 startActivity(intent);
                 break;
 

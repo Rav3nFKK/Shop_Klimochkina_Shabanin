@@ -45,7 +45,7 @@ public class Activity2 extends AppCompatActivity implements View.OnClickListener
 
         dBhelper = new DBhelper(this);
         database = dBhelper.getWritableDatabase();
-        UpdateTable();
+       UpdateTable();
 
     }
     public void UpdateTable() {
@@ -103,7 +103,7 @@ public class Activity2 extends AppCompatActivity implements View.OnClickListener
         Toast toast;
         switch (v.getId()) {
             case R.id.GoBack:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, LoginActvActivity.class);
                 startActivity(intent);
 
                 break;
