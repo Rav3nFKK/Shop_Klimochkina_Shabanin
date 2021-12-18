@@ -7,33 +7,35 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActvActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText logintxt, passwordtxt;
-    Button autobtn, regbtn;
-    DBhelper dBhelper;
-    SQLiteDatabase database;
+    Button btnLogin, btnReg;
+    EditText edUsername, edPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_actv);
-        logintxt = findViewById(R.id.login);
-        passwordtxt = findViewById(R.id.password);
-        autobtn = findViewById(R.id.auto);
-        regbtn = findViewById(R.id.reg);
 
-        autobtn.setOnClickListener(this);
-        regbtn.setOnClickListener(this);
+        btnLogin = (Button) findViewById(R.id.btn_login);
+        btnReg = (Button) findViewById(R.id.btn_register);
+        edUsername = (EditText) findViewById(R.id.et_email);
+        edPassword = (EditText) findViewById(R.id.et_password);
 
-        dBhelper = new DBhelper(this);
-        database = dBhelper.getWritableDatabase();
+        btnLogin.setOnClickListener(this);
+        btnReg.setOnClickListener(this);
+
 
     }
 
@@ -41,55 +43,46 @@ public class LoginActvActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.auto:
-                Cursor logCursor = database.query(DBhelper.TABLE_USERS, null, null, null, null, null, null);
 
-                boolean logged = false;
-                if (logCursor.moveToFirst()) {
-                    int usernameindex = logCursor.getColumnIndex(DBhelper.KEY_LOGIN);
-                    int passwordindex = logCursor.getColumnIndex(DBhelper.KEY_PASSWORD);
-
-                    do {
-                        if (logintxt.getText().toString().equals(logCursor.getString(usernameindex)) && passwordtxt.getText().toString().equals(logCursor.getString(passwordindex))) {
-                            if (logintxt.getText().toString().equals("admin"))
-                                startActivity(new Intent(this, Activity2.class));
-                            else
-                                startActivity(new Intent(this, MainActivity.class));
-
-                            logged = true;
-                            break;
-                        }
-                    } while (logCursor.moveToNext());
+            case R.id.btn_login:
+                if (TextUtils.isEmpty(edUsername.getText().toString()) || TextUtils.isEmpty(edPassword.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "Необходимо заполнить все поля", Toast.LENGTH_LONG).show();
+                } else {
+                    LoginRequest loginRequest = new LoginRequest();
+                    loginRequest.setUsername(edUsername.getText().toString());
+                    loginRequest.setPassword(edPassword.getText().toString());
+                    loginUsers(loginRequest);
                 }
-                logCursor.close();
-                if (!logged)
-                    Toast.makeText(this, "Данный пользователь не зарегистрирован.", Toast.LENGTH_LONG).show();
-
                 break;
-
-            case R.id.reg:
-                Cursor signcursor = database.query(DBhelper.TABLE_USERS, null, null, null, null, null, null);
-
-                boolean finded = false;
-                if (signcursor.moveToFirst()) {
-                    int usernameIndex = signcursor.getColumnIndex(DBhelper.KEY_LOGIN);
-                    do {
-                        if (logintxt.getText().toString().equals(signcursor.getString(usernameIndex))) {
-                            Toast.makeText(this, "Данный пользователь уже зарегестрирован", Toast.LENGTH_LONG).show();
-                            finded = true;
-                            break;
-                        }
-                    } while (signcursor.moveToNext());
-                }
-                if (!finded) {
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put(DBhelper.KEY_LOGIN, logintxt.getText().toString());
-                    contentValues.put(DBhelper.KEY_PASSWORD, passwordtxt.getText().toString());
-                    database.insert(DBhelper.TABLE_USERS, null, contentValues);
-                    Toast.makeText(this, "Регистрация прошла успешно", Toast.LENGTH_LONG).show();
-                }
-                signcursor.close();
+            case R.id.btn_register:
+                startActivity(new Intent(this, registr_actv.class));
                 break;
         }
+    }
+
+    public void loginUsers(LoginRequest loginRequest) {
+        Call<LoginResponse> loginResponseCall = ApiClient.getService().loginUser(loginRequest);
+        loginResponseCall.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.isSuccessful()) {
+                    LoginResponse loginResponse = response.body();
+                    if (edUsername.getText().toString().equals("admin1")) {
+                        startActivity(new Intent(LoginActvActivity.this, Activity2.class));
+                    } else {
+                        startActivity(new Intent(LoginActvActivity.this, MainActivity.class));
+                    }
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Что-то пошло не так", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                String message = t.getLocalizedMessage();
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

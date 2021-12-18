@@ -3,11 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/drawable/btn_custom.xml" value="0.2703125" />
+        <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/drawable/et_custom.xml" value="0.2703125" />
+        <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2703125" />
+        <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2703125" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.15327978580990628" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/activity_login.xml" value="0.176" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/fragment_block.xml" value="0.15833333333333333" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/login_actv.xml" value="0.264" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/purchase.xml" value="0.2509057971014493" />
+        <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/registr_actv.xml" value="0.264" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/layout/splash.xml" value="0.264" />
         <entry key="..\:/androidus/Shop_Klimochkina_Shabanin/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14635416666666667" />
       </map>

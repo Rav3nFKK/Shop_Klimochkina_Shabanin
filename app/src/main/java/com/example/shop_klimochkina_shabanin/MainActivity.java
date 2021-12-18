@@ -1,6 +1,7 @@
 package com.example.shop_klimochkina_shabanin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -155,3 +156,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
+
