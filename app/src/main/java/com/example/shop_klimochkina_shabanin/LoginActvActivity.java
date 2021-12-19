@@ -67,7 +67,7 @@ public class LoginActvActivity extends AppCompatActivity implements View.OnClick
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
-                    if (edUsername.getText().toString().equals("admin1")) {
+                    if (edUsername.getText().toString().equals("admin")) {
                         startActivity(new Intent(LoginActvActivity.this, Activity2.class));
                     } else {
                         startActivity(new Intent(LoginActvActivity.this, MainActivity.class));
